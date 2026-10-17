@@ -1,0 +1,894 @@
+{
+ "purpose": "deployment artifacts of the GUI; not used for any number of the paper",
+ "created": "2026-09-30",
+ "script": "gui/train_deployment_models.py",
+ "dataset": "v021 (task 24)",
+ "input_order": [
+  "n_story",
+  "n_bay",
+  "L_bay",
+  "h1",
+  "h_typ",
+  "Htot",
+  "B_tot",
+  "G_line",
+  "Q_line",
+  "M_building",
+  "grade_ord",
+  "soil_ord",
+  "d_col",
+  "bf_col",
+  "tf_col",
+  "tw_col",
+  "d_beam",
+  "bf_beam",
+  "tf_beam",
+  "tw_beam",
+  "hazard_ord"
+ ],
+ "input_units": {
+  "n_story": "",
+  "n_bay": "",
+  "L_bay": "m",
+  "h1": "m",
+  "h_typ": "m",
+  "Htot": "m",
+  "B_tot": "m",
+  "G_line": "kN/m",
+  "Q_line": "kN/m",
+  "M_building": "t",
+  "grade_ord": "",
+  "soil_ord": "",
+  "d_col": "mm",
+  "bf_col": "mm",
+  "tf_col": "mm",
+  "tw_col": "mm",
+  "d_beam": "mm",
+  "bf_beam": "mm",
+  "tf_beam": "mm",
+  "tw_beam": "mm",
+  "hazard_ord": ""
+ },
+ "targets": [
+  "Vy",
+  "dy",
+  "Vmax",
+  "dmax",
+  "V_at_dt",
+  "dt",
+  "du",
+  "T1"
+ ],
+ "encodings": {
+  "grade_ord": {
+   "S235": 0,
+   "S275": 1,
+   "S355": 2
+  },
+  "soil_ord": {
+   "ZA": 0,
+   "ZB": 1,
+   "ZC": 2,
+   "ZD": 3,
+   "ZE": 4
+  },
+  "hazard_ord": {
+   "DD-2": 0,
+   "DD-1": 1
+  }
+ },
+ "transforms": {
+  "log1p": "z = log(1 + y); y = exp(z) - 1",
+  "lognormH": "z = log(y / H_tot); y = exp(z) H_tot",
+  "raw": "z = y"
+ },
+ "ensemble": {
+  "seeds": [
+   42,
+   1,
+   2,
+   3,
+   4
+  ],
+  "n_members": 5,
+  "prediction": "arithmetic mean of the five members in physical units (after the inverse transform)",
+  "decision": "D56 (author, 2026-09-24): seed ensemble of five networks; lock v4: the hyperparameters tuned on v021 with the lock v3 budgets"
+ },
+ "cap": "V_at_dt of every member = min(V_at_dt, the V_max of the member with the same random_state), then the mean, as in the paper (D56); the mean then satisfies V_at_dt <= V_max",
+ "conformal": {
+  "level": 0.9,
+  "interval": "[y (1 - q), y (1 + q)]",
+  "q": {
+   "Vy": 0.018720150358647453,
+   "dy": 0.0139793345055226,
+   "Vmax": 0.021604331739337682,
+   "dmax": 0.06112605558743297,
+   "V_at_dt": 0.019903839627327582,
+   "dt": 0.010889988246558924,
+   "du": 0.018212388246969337,
+   "T1": 0.006538610092109886
+  },
+  "source": "recomputed from the cached canonical ANN test predictions with the procedure of notebook cell 55; equals table_all_conformal_summary.csv (rel_halfwidth_%) at its precision"
+ },
+ "realized_ranges": {
+  "n_story": [
+   2.0,
+   8.0
+  ],
+  "n_bay": [
+   2.0,
+   5.0
+  ],
+  "L_bay": [
+   4.0000290233518205,
+   6.999984483702688
+  ],
+  "h1": [
+   3.500009044044611,
+   4.499992198518599
+  ],
+  "h_typ": [
+   3.000008198126198,
+   3.9999432293251727
+  ],
+  "Htot": [
+   6.527366921794007,
+   27.999700295312863
+  ],
+  "B_tot": [
+   8.001279786294209,
+   34.99785482539156
+  ],
+  "G_line": [
+   8.000141316239745,
+   24.99973205551278
+  ],
+  "Q_line": [
+   2.0000246595642164,
+   7.999935466374132
+  ],
+  "M_building": [
+   31.76222042113476,
+   1510.9500911418077
+  ],
+  "grade_ord": [
+   0.0,
+   2.0
+  ],
+  "soil_ord": [
+   0.0,
+   4.0
+  ],
+  "d_col": [
+   180.0,
+   1000.0
+  ],
+  "bf_col": [
+   180.0,
+   300.0
+  ],
+  "tf_col": [
+   14.0,
+   36.0
+  ],
+  "tw_col": [
+   8.5,
+   19.0
+  ],
+  "d_beam": [
+   160.0,
+   600.0
+  ],
+  "bf_beam": [
+   82.0,
+   220.0
+  ],
+  "tf_beam": [
+   7.4,
+   19.0
+  ],
+  "tw_beam": [
+   5.0,
+   12.0
+  ],
+  "hazard_ord": [
+   0.0,
+   0.0
+  ]
+ },
+ "targets_meta": {
+  "Vy": {
+   "unit": "kN",
+   "transform": "log1p",
+   "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+   ],
+   "members": [
+    {
+     "random_state": 42,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 25.4
+    },
+    {
+     "random_state": 1,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 24.0
+    },
+    {
+     "random_state": 2,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 24.8
+    },
+    {
+     "random_state": 3,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 25.5
+    },
+    {
+     "random_state": 4,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 24.2
+    }
+   ],
+   "n_layers": 4,
+   "activation": "tanh",
+   "out_activation": "identity",
+   "effective_hyperparameters": {
+    "hidden_layer_sizes": [
+     256,
+     128,
+     64
+    ],
+    "alpha": 7.664067352964152e-07,
+    "learning_rate_init": 0.004692032838722881,
+    "activation": "tanh",
+    "batch_size": 128,
+    "solver": "adam",
+    "max_iter": 500,
+    "early_stopping": false,
+    "n_iter_no_change": 15,
+    "random_state": [
+     42,
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "optuna_json_entry": {
+    "arch": "256-128-64",
+    "alpha": 7.664067352964152e-07,
+    "lr": 0.004692032838722881,
+    "activation": "tanh",
+    "batch_size": 128,
+    "max_iter": 500
+   },
+   "q_conformal_90": 0.018720150358647453
+  },
+  "dy": {
+   "unit": "m",
+   "transform": "lognormH",
+   "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+   ],
+   "members": [
+    {
+     "random_state": 42,
+     "n_layers": 4,
+     "n_iter": 18,
+     "fit_seconds": 22.9
+    },
+    {
+     "random_state": 1,
+     "n_layers": 4,
+     "n_iter": 18,
+     "fit_seconds": 23.7
+    },
+    {
+     "random_state": 2,
+     "n_layers": 4,
+     "n_iter": 18,
+     "fit_seconds": 24.4
+    },
+    {
+     "random_state": 3,
+     "n_layers": 4,
+     "n_iter": 18,
+     "fit_seconds": 22.7
+    },
+    {
+     "random_state": 4,
+     "n_layers": 4,
+     "n_iter": 18,
+     "fit_seconds": 23.4
+    }
+   ],
+   "n_layers": 4,
+   "activation": "tanh",
+   "out_activation": "identity",
+   "effective_hyperparameters": {
+    "hidden_layer_sizes": [
+     256,
+     128,
+     64
+    ],
+    "alpha": 7.671884738584806e-07,
+    "learning_rate_init": 0.004863661242582769,
+    "activation": "tanh",
+    "batch_size": 128,
+    "solver": "adam",
+    "max_iter": 500,
+    "early_stopping": false,
+    "n_iter_no_change": 15,
+    "random_state": [
+     42,
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "optuna_json_entry": {
+    "arch": "256-128-64",
+    "alpha": 7.671884738584806e-07,
+    "lr": 0.004863661242582769,
+    "activation": "tanh",
+    "batch_size": 128,
+    "max_iter": 500
+   },
+   "q_conformal_90": 0.0139793345055226
+  },
+  "Vmax": {
+   "unit": "kN",
+   "transform": "log1p",
+   "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+   ],
+   "members": [
+    {
+     "random_state": 42,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 25.8
+    },
+    {
+     "random_state": 1,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 24.4
+    },
+    {
+     "random_state": 2,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 24.9
+    },
+    {
+     "random_state": 3,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 25.7
+    },
+    {
+     "random_state": 4,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 24.3
+    }
+   ],
+   "n_layers": 4,
+   "activation": "tanh",
+   "out_activation": "identity",
+   "effective_hyperparameters": {
+    "hidden_layer_sizes": [
+     256,
+     128,
+     64
+    ],
+    "alpha": 1.1027761650118683e-07,
+    "learning_rate_init": 0.003585684777029197,
+    "activation": "tanh",
+    "batch_size": 128,
+    "solver": "adam",
+    "max_iter": 700,
+    "early_stopping": false,
+    "n_iter_no_change": 15,
+    "random_state": [
+     42,
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "optuna_json_entry": {
+    "arch": "256-128-64",
+    "alpha": 1.1027761650118683e-07,
+    "lr": 0.003585684777029197,
+    "activation": "tanh",
+    "batch_size": 128,
+    "max_iter": 700
+   },
+   "q_conformal_90": 0.021604331739337682
+  },
+  "dmax": {
+   "unit": "m",
+   "transform": "lognormH",
+   "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+   ],
+   "members": [
+    {
+     "random_state": 42,
+     "n_layers": 4,
+     "n_iter": 59,
+     "fit_seconds": 77.8
+    },
+    {
+     "random_state": 1,
+     "n_layers": 4,
+     "n_iter": 39,
+     "fit_seconds": 51.6
+    },
+    {
+     "random_state": 2,
+     "n_layers": 4,
+     "n_iter": 54,
+     "fit_seconds": 70.3
+    },
+    {
+     "random_state": 3,
+     "n_layers": 4,
+     "n_iter": 87,
+     "fit_seconds": 115.6
+    },
+    {
+     "random_state": 4,
+     "n_layers": 4,
+     "n_iter": 61,
+     "fit_seconds": 80.8
+    }
+   ],
+   "n_layers": 4,
+   "activation": "tanh",
+   "out_activation": "identity",
+   "effective_hyperparameters": {
+    "hidden_layer_sizes": [
+     256,
+     128,
+     64
+    ],
+    "alpha": 1.5058472690436292e-07,
+    "learning_rate_init": 0.0009521393508587975,
+    "activation": "tanh",
+    "batch_size": 128,
+    "solver": "adam",
+    "max_iter": 500,
+    "early_stopping": false,
+    "n_iter_no_change": 15,
+    "random_state": [
+     42,
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "optuna_json_entry": {
+    "arch": "256-128-64",
+    "alpha": 1.5058472690436292e-07,
+    "lr": 0.0009521393508587975,
+    "activation": "tanh",
+    "batch_size": 128,
+    "max_iter": 500
+   },
+   "q_conformal_90": 0.06112605558743297
+  },
+  "V_at_dt": {
+   "unit": "kN",
+   "transform": "log1p",
+   "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+   ],
+   "members": [
+    {
+     "random_state": 42,
+     "n_layers": 3,
+     "n_iter": 28,
+     "fit_seconds": 15.3
+    },
+    {
+     "random_state": 1,
+     "n_layers": 3,
+     "n_iter": 28,
+     "fit_seconds": 16.1
+    },
+    {
+     "random_state": 2,
+     "n_layers": 3,
+     "n_iter": 29,
+     "fit_seconds": 16.5
+    },
+    {
+     "random_state": 3,
+     "n_layers": 3,
+     "n_iter": 29,
+     "fit_seconds": 17.0
+    },
+    {
+     "random_state": 4,
+     "n_layers": 3,
+     "n_iter": 27,
+     "fit_seconds": 14.8
+    }
+   ],
+   "n_layers": 3,
+   "activation": "tanh",
+   "out_activation": "identity",
+   "effective_hyperparameters": {
+    "hidden_layer_sizes": [
+     128,
+     64
+    ],
+    "alpha": 0.00021882332577671836,
+    "learning_rate_init": 0.0015437819657391932,
+    "activation": "tanh",
+    "batch_size": 128,
+    "solver": "adam",
+    "max_iter": 300,
+    "early_stopping": false,
+    "n_iter_no_change": 15,
+    "random_state": [
+     42,
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "optuna_json_entry": {
+    "arch": "128-64",
+    "alpha": 0.00021882332577671836,
+    "lr": 0.0015437819657391932,
+    "activation": "tanh",
+    "batch_size": 128,
+    "max_iter": 300
+   },
+   "q_conformal_90": 0.019903839627327582
+  },
+  "dt": {
+   "unit": "m",
+   "transform": "lognormH",
+   "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+   ],
+   "members": [
+    {
+     "random_state": 42,
+     "n_layers": 4,
+     "n_iter": 20,
+     "fit_seconds": 27.4
+    },
+    {
+     "random_state": 1,
+     "n_layers": 4,
+     "n_iter": 20,
+     "fit_seconds": 25.4
+    },
+    {
+     "random_state": 2,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 25.3
+    },
+    {
+     "random_state": 3,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 25.9
+    },
+    {
+     "random_state": 4,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 24.2
+    }
+   ],
+   "n_layers": 4,
+   "activation": "tanh",
+   "out_activation": "identity",
+   "effective_hyperparameters": {
+    "hidden_layer_sizes": [
+     256,
+     128,
+     64
+    ],
+    "alpha": 2.534825927512691e-05,
+    "learning_rate_init": 0.002455760707689144,
+    "activation": "tanh",
+    "batch_size": 128,
+    "solver": "adam",
+    "max_iter": 700,
+    "early_stopping": false,
+    "n_iter_no_change": 15,
+    "random_state": [
+     42,
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "optuna_json_entry": {
+    "arch": "256-128-64",
+    "alpha": 2.534825927512691e-05,
+    "lr": 0.002455760707689144,
+    "activation": "tanh",
+    "batch_size": 128,
+    "max_iter": 700
+   },
+   "q_conformal_90": 0.010889988246558924
+  },
+  "du": {
+   "unit": "m",
+   "transform": "lognormH",
+   "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+   ],
+   "members": [
+    {
+     "random_state": 42,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 24.7
+    },
+    {
+     "random_state": 1,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 26.2
+    },
+    {
+     "random_state": 2,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 24.0
+    },
+    {
+     "random_state": 3,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 24.7
+    },
+    {
+     "random_state": 4,
+     "n_layers": 4,
+     "n_iter": 19,
+     "fit_seconds": 24.0
+    }
+   ],
+   "n_layers": 4,
+   "activation": "tanh",
+   "out_activation": "identity",
+   "effective_hyperparameters": {
+    "hidden_layer_sizes": [
+     256,
+     128,
+     64
+    ],
+    "alpha": 0.00022824796968248692,
+    "learning_rate_init": 0.0046142861768649745,
+    "activation": "tanh",
+    "batch_size": 128,
+    "solver": "adam",
+    "max_iter": 700,
+    "early_stopping": false,
+    "n_iter_no_change": 15,
+    "random_state": [
+     42,
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "optuna_json_entry": {
+    "arch": "256-128-64",
+    "alpha": 0.00022824796968248692,
+    "lr": 0.0046142861768649745,
+    "activation": "tanh",
+    "batch_size": 128,
+    "max_iter": 700
+   },
+   "q_conformal_90": 0.018212388246969337
+  },
+  "T1": {
+   "unit": "s",
+   "transform": "raw",
+   "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+   ],
+   "members": [
+    {
+     "random_state": 42,
+     "n_layers": 5,
+     "n_iter": 18,
+     "fit_seconds": 18.9
+    },
+    {
+     "random_state": 1,
+     "n_layers": 5,
+     "n_iter": 18,
+     "fit_seconds": 18.9
+    },
+    {
+     "random_state": 2,
+     "n_layers": 5,
+     "n_iter": 18,
+     "fit_seconds": 18.8
+    },
+    {
+     "random_state": 3,
+     "n_layers": 5,
+     "n_iter": 18,
+     "fit_seconds": 18.8
+    },
+    {
+     "random_state": 4,
+     "n_layers": 5,
+     "n_iter": 18,
+     "fit_seconds": 18.8
+    }
+   ],
+   "n_layers": 5,
+   "activation": "relu",
+   "out_activation": "identity",
+   "effective_hyperparameters": {
+    "hidden_layer_sizes": [
+     256,
+     128,
+     64,
+     32
+    ],
+    "alpha": 4.636976831032312e-07,
+    "learning_rate_init": 0.003970890712666122,
+    "activation": "relu",
+    "batch_size": 128,
+    "solver": "adam",
+    "max_iter": 400,
+    "early_stopping": false,
+    "n_iter_no_change": 15,
+    "random_state": [
+     42,
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "optuna_json_entry": {
+    "arch": "256-128-64-32",
+    "alpha": 4.636976831032312e-07,
+    "lr": 0.003970890712666122,
+    "activation": "relu",
+    "batch_size": 128,
+    "max_iter": 400
+   },
+   "q_conformal_90": 0.006538610092109886
+  }
+ },
+ "architecture_note": "hidden_layer_sizes = the tuned \"arch\" of each target (Optuna JSON), mapped by reg_params as in the notebook; five members per target (D56, lock v4); the lock v3 networks (v020) are archived in qa/lock_v3/gui/assets/models/.",
+ "provenance": {
+  "data_file": "data/batch_production50000_paper1_v021.csv",
+  "data_sha256": "8fe9e71507e200175784ed9697bdc9d2302b09fb8c2812cc0e44bf9bd08e1efa",
+  "optuna_json": "ML/outputs/paper1_g03_50k/cache/s1_optuna_reg_multialgo.json",
+  "optuna_json_sha256": "edb33cddc94f72bff85fed22bbce75c7343abc430c9bc9a9faca0ed076c2feef",
+  "canonical_predictions": "ML/outputs/paper1_g03_50k/cache/p1_state_results_reg_ANN.pkl",
+  "canonical_lock": "v4 (qa/CANONICAL_LOCK.md, task 24, decisions D107 to D120)",
+  "n_train_rows": 70000,
+  "n_test_rows": 30000,
+  "seeds": [
+   42,
+   1,
+   2,
+   3,
+   4
+  ],
+  "python": "3.12.14",
+  "numpy": "2.5.3",
+  "pandas": "2.3.3",
+  "scikit_learn": "1.9.1",
+  "scipy": "1.18.1",
+  "joblib": "1.6.0",
+  "blas_before": [
+   {
+    "api": "openblas",
+    "threads": 16
+   },
+   {
+    "api": "openmp",
+    "threads": 16
+   },
+   {
+    "api": "openblas",
+    "threads": 16
+   }
+  ],
+  "blas_during_fit": [
+   {
+    "api": "openblas",
+    "threads": 16
+   },
+   {
+    "api": "openmp",
+    "threads": 16
+   },
+   {
+    "api": "openblas",
+    "threads": 16
+   }
+  ],
+  "blas_threads": 16
+ },
+ "gate": {
+  "tier": "G1",
+  "max_rel_diff": {
+   "Vy": 0.0,
+   "dy": 0.0,
+   "Vmax": 0.0,
+   "dmax": 0.0,
+   "V_at_dt": 0.0,
+   "dt": 0.0,
+   "du": 0.0,
+   "T1": 0.0
+  }
+ },
+ "files": {
+  "ann_dmax.joblib": "408eebc1326b494055c078a1bdf0d2aad0e9c7858abb1b66bdf41a2df9f4322b",
+  "ann_dt.joblib": "fb7b0459628a21a8181c8d833971f50fbba5fa1f269245ed0ccf167ba5d19d28",
+  "ann_du.joblib": "3a319dfbcdbf972e44ba37eadb413bf258126c922091c2d01eec8093f7c1eabd",
+  "ann_dy.joblib": "0498d067a3f84f3b4e0e48de01c90be9a7ed6cce709751f012089efde8bb60cb",
+  "ann_T1.joblib": "ff964c23f1edfaf2eb2655097f089a958598050546123f7494a1516212636f4a",
+  "ann_V_at_dt.joblib": "efcc42a8583e0b601d3221f8e3eb2e31438779ff084bec25c046b91909f1898a",
+  "ann_Vmax.joblib": "0acc29dded288b70c1a999a062946a71e1614e0faa7ee0f36dd122b6f2bb5fb3",
+  "ann_Vy.joblib": "74f924c67a24734fd1b957682086fbecee8bf45370f4b0873a4580dee814eba6",
+  "ann_weights.npz": "45bf5baad41a4bdbf4ec8e822ce8ec5c415ac6f3bd6cb18ca5653fa69f8d6520"
+ }
+}

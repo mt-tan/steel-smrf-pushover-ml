@@ -1,0 +1,2 @@
+# steel-smrf-pushover-ml
+Graphical user interface program of the paper Machine Learning Prediction of the Nonlinear Pushover Response of High-Ductility Steel Moment-Resisting Frames: it predicts the eight characteristic pushover quantities of a steel moment-resisting frame for the DD-2 and DD-1 hazard levels with their prediction intervals, using the 40 trained networks of the paper (run: `cd "gui program"`, `python -m pip install -r requirements.txt`, `python app.py`).

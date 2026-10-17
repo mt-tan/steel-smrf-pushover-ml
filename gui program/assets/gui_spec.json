@@ -1,0 +1,217 @@
+{
+ "created": "2026-09-30",
+ "source": "gui/make_gui_spec.py",
+ "dataset": "v021 (task 24)",
+ "data_sha256": "8fe9e71507e200175784ed9697bdc9d2302b09fb8c2812cc0e44bf9bd08e1efa",
+ "catalogue_sha256": "fb771f6a7b006d8fef7ee660c92d9d593ec19a14e6f42a635379c0ec16a018d3",
+ "column_profiles": [
+  "HE180B",
+  "HE200B",
+  "HE220B",
+  "HE240B",
+  "HE260B",
+  "HE280B",
+  "HE300B",
+  "HE320B",
+  "HE340B",
+  "HE360A",
+  "HE360B",
+  "HE400A",
+  "HE400B",
+  "HE450A",
+  "HE450B",
+  "HE500A",
+  "HE500B",
+  "HE550A",
+  "HE550B",
+  "HE600A",
+  "HE600B",
+  "HE650A",
+  "HE650B",
+  "HE700A",
+  "HE700B",
+  "HE800A",
+  "HE800B",
+  "HE900A",
+  "HE900B",
+  "HE1000A",
+  "HE1000B"
+ ],
+ "beam_profiles": [
+  "IPE160",
+  "IPE180",
+  "IPE200",
+  "IPE220",
+  "IPE240",
+  "IPE270",
+  "IPE300",
+  "IPE330",
+  "IPE360",
+  "IPE400",
+  "IPE450",
+  "IPE500",
+  "IPE550",
+  "IPE600"
+ ],
+ "grades": [
+  "S235",
+  "S275",
+  "S355"
+ ],
+ "soils": [
+  "ZA",
+  "ZB",
+  "ZC",
+  "ZD",
+  "ZE"
+ ],
+ "hazard_levels": [
+  "DD-2",
+  "DD-1"
+ ],
+ "story_counts": [
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8
+ ],
+ "bay_counts": [
+  2,
+  3,
+  4,
+  5
+ ],
+ "realized_ranges": {
+  "n_story": [
+   2.0,
+   8.0
+  ],
+  "n_bay": [
+   2.0,
+   5.0
+  ],
+  "L_bay": [
+   4.0000290233518205,
+   6.999984483702688
+  ],
+  "h1": [
+   3.500009044044611,
+   4.499992198518599
+  ],
+  "h_typ": [
+   3.000008198126198,
+   3.9999432293251727
+  ],
+  "Htot": [
+   6.527366921794007,
+   27.999700295312863
+  ],
+  "B_tot": [
+   8.001279786294209,
+   34.99785482539156
+  ],
+  "G_line": [
+   8.000141316239745,
+   24.99973205551278
+  ],
+  "Q_line": [
+   2.0000246595642164,
+   7.999935466374132
+  ],
+  "M_building": [
+   31.76222042113476,
+   1510.9500911418077
+  ],
+  "grade_ord": [
+   0.0,
+   2.0
+  ],
+  "soil_ord": [
+   0.0,
+   4.0
+  ],
+  "d_col": [
+   180.0,
+   1000.0
+  ],
+  "bf_col": [
+   180.0,
+   300.0
+  ],
+  "tf_col": [
+   14.0,
+   36.0
+  ],
+  "tw_col": [
+   8.5,
+   19.0
+  ],
+  "d_beam": [
+   160.0,
+   600.0
+  ],
+  "bf_beam": [
+   82.0,
+   220.0
+  ],
+  "tf_beam": [
+   7.4,
+   19.0
+  ],
+  "tw_beam": [
+   5.0,
+   12.0
+  ]
+ },
+ "table2_printed": {
+  "n_story": "2 to 8",
+  "n_bay": "2 to 5",
+  "L_bay": "4.00 to 7.00",
+  "h1": "3.50 to 4.50",
+  "h_typ": "3.00 to 4.00",
+  "Htot": "6.53 to 28.00",
+  "B_tot": "8.00 to 35.00",
+  "G_line": "8.0 to 25.0",
+  "Q_line": "2.0 to 8.0",
+  "M_building": "31.8 to 1511.0",
+  "d_col": "180 to 1000",
+  "bf_col": "180 to 300",
+  "tf_col": "14.0 to 36.0",
+  "tw_col": "8.5 to 19.0",
+  "d_beam": "160 to 600",
+  "bf_beam": "82 to 220",
+  "tf_beam": "7.4 to 19.0",
+  "tw_beam": "5.0 to 12.0"
+ },
+ "default": {
+  "model_id": 16128,
+  "n_story": 5,
+  "n_bay": 4,
+  "L_bay": 5.893,
+  "h1": 3.869,
+  "h_typ": 3.335,
+  "G_line": 15.91,
+  "Q_line": 5.79,
+  "grade": "S275",
+  "soil": "ZC",
+  "col_profile": "HE400A",
+  "beam_profile": "IPE330"
+ },
+ "default_rule": {
+  "n_story": 5,
+  "n_bay": 4,
+  "grade": "S275",
+  "soil": "ZC",
+  "split": "test",
+  "closest": [
+   "L_bay",
+   "h1",
+   "h_typ",
+   "G_line",
+   "Q_line"
+  ]
+ }
+}
